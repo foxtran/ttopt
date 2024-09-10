@@ -1,0 +1,48 @@
+name: Create wheels
+
+on:
+  push:
+    branches: [ "master", "CI" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.7"]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install -U build
+        python -m pip install -U setuptools
+        python -m pip install -U nuitka
+    - name: Compile package
+      run: |
+        python -m nuitka --module ttopt --follow-import-to=ttopt
+    - name: Create a wheel
+      run: |
+        python -m build --wheel . --outdir wheels
+        bash .github/workflows/patch_whl.sh
+    - name: Install wheels
+      run: |
+        python -m pip install wheels/*.whl
+    - name: Test that wheel is working
+      run: |
+        cd ttopt-demo && python base.py
+        # pytest (?)
+    - name: Generate artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ttopt-python${{ matrix.python-version }}
+        path: wheels/*.whl
