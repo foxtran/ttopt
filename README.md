@@ -18,7 +18,7 @@ pip install ttopt==0.6.2
 
 ## Examples
 
-The demo-scripts with detailed comments are collected in the folder `demo`:
+The demo-scripts with detailed comments are collected in the folder `ttopt-demo`:
 
 - `base.py` - we find the minimum for the 10-dimensional function with vectorized input;
 - `qtt.py` - we do almost the same as in the `base.py` script, but use the QTT-based approach (note that results are much more better then in the `base.py` example);

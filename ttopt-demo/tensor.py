@@ -3,7 +3,7 @@
 We'll find the minimum for the given simple d-dimensional tensor with elements:
 Y[i_1, i_2, ..., i_d] = (i_1 - 2)^2 + (i_2 - 3)^2 + i_2^4 + i_3^4 + ... + i_d^4.
 
-Run it from the root of the project as "python demo/tensor.py".
+Run it from the root of the project as "python ttopt-demo/tensor.py".
 
 As a result of the script work we expect the output in console like this:
 "

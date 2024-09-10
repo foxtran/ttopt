@@ -1,17 +1,20 @@
-"""The demo of using ttopt. Basic example.
+"""The demo of using ttopt. Example with QTT.
 
 We'll find the minimum for the 10-dimensional Alpine function with vectorized
 input. The target function for minimization has the form f(X), where input X is
 the [samples, dimension] numpy array.
 
-Run it from the root of the project as "python demo/base.py".
+The target function and all the selected parameters are the same as in the
+"base.py", except that we replace grid size "n" by grid-factors "p" and "q".
+
+Run it from the root of the project as "python ttopt-demo/qtt.py".
 
 As a result of the script work we expect the output in console like this:
 "
 ...
-Alpine-10d | evals=1.00e+05 | t_cur=2.23e-02 | e_x=5.02e-01 e_y=9.22e-02
+Alpine-10d | evals=1.00e+05 | t_cur=1.62e-01 | e_x=3.42e+00 e_y=4.23e-06
 ----------------------------------------------------------------------
-Alpine-10d | evals=1.00e+05 | t_all=8.37e-02 | e_x=5.02e-01 e_y=9.22e-02
+Alpine-10d | evals=1.00e+05 | t_all=2.28e+00 | e_x=3.42e+00 e_y=4.23e-06
 "
 
 """
@@ -37,10 +40,11 @@ tto = TTOpt(
     d=d,                    # Number of function dimensions
     a=-10.,                 # Grid lower bound (number or list of len d)
     b=+10.,                 # Grid upper bound (number or list of len d)
-    n=2**6,                 # Number of grid points (number or list of len d)
+    p=2,                    # The grid size factor (there will n=p^q points)
+    q=20,                   # The grid size factor (there will n=p^q points)
     evals=1.E+5,            # Number of function evaluations
     name='Alpine',          # Function name for log (this is optional)
-    x_opt_real=np.zeros(d), # Real value of x-minima (x; this is for test)
+    x_opt_real=np.ones(d),  # Real value of x-minima (x; this is for test)
     y_opt_real=0.,          # Real value of y-minima (y=f(x); this is for test)
     with_log=True)
 

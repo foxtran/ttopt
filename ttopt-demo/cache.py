@@ -1,24 +1,21 @@
-"""The demo of using ttopt. Example with QTT.
+"""The demo of using ttopt. Simple example with cache usage.
 
-We'll find the minimum for the 10-dimensional Alpine function with vectorized
-input. The target function for minimization has the form f(X), where input X is
-the [samples, dimension] numpy array.
+We'll find the minimum for the simple analytic function of the form f(X), where
+input X is the [samples, dimension] numpy array using the cache.
 
-The target function and all the selected parameters are the same as in the
-"base.py", except that we replace grid size "n" by grid-factors "p" and "q".
-
-Run it from the root of the project as "python demo/qtt.py".
+Run it from the root of the project as "python ttopt-demo/cache.py".
 
 As a result of the script work we expect the output in console like this:
 "
 ...
-Alpine-10d | evals=1.00e+05 | t_cur=1.62e-01 | e_x=3.42e+00 e_y=4.23e-06
+Simple-5d  | evals=9.80e+03+3.01e+03 | t_cur=6.47e-02 | e_x=3.55e-02 e_y=1.03e-04
 ----------------------------------------------------------------------
-Alpine-10d | evals=1.00e+05 | t_all=2.28e+00 | e_x=3.42e+00 e_y=4.23e-06
+Simple-5d  | evals=9.80e+03+3.01e+03 | t_all=7.61e-02 | e_x=3.55e-02 e_y=1.03e-04 
 "
 
 """
 import numpy as np
+from scipy.optimize import rosen
 
 
 from ttopt import TTOpt
@@ -28,24 +25,24 @@ from ttopt import ttopt_init
 np.random.seed(42)
 
 
-d = 10                      # Number of function dimensions:
+d = 5                       # Number of function dimensions:
 rank = 4                    # Maximum TT-rank while cross-like iterations
 def f(X):                   # Target function
-    return np.sum(np.abs(X * np.sin(X) + 0.1 * X), axis=1)
+    return np.sin(0.1 * X[:, 0])**2 + 0.1 * np.sum(X[:, 1:]**2, axis=1)
 
 
 # We initialize the TTOpt class instance with the correct parameters:
 tto = TTOpt(
     f=f,                    # Function for minimization. X is [samples, dim]
     d=d,                    # Number of function dimensions
-    a=-10.,                 # Grid lower bound (number or list of len d)
-    b=+10.,                 # Grid upper bound (number or list of len d)
-    p=2,                    # The grid size factor (there will n=p^q points)
-    q=20,                   # The grid size factor (there will n=p^q points)
-    evals=1.E+5,            # Number of function evaluations
-    name='Alpine',          # Function name for log (this is optional)
-    x_opt_real=np.ones(d),  # Real value of x-minima (x; this is for test)
+    a=-1.,                  # Grid lower bound (number or list of len d)
+    b=+1.,                  # Grid upper bound (number or list of len d)
+    n=2**6,                 # Number of grid points (number or list of len d)
+    evals=1.E+4,            # Number of function evaluations
+    name='Simple',          # Function name for log (this is optional)
+    x_opt_real=np.zeros(d), # Real value of x-minima (x; this is for test)
     y_opt_real=0.,          # Real value of y-minima (y=f(x); this is for test)
+    with_cache=True,        # We save all requests into cache
     with_log=True)
 
 

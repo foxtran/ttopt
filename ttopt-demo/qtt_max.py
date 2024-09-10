@@ -4,7 +4,7 @@ We'll find the maximum for the 10-dimensional Alpine function with vectorized
 input. The target function for maximization has the form f(X), where input X is
 the [samples, dimension] numpy array.
 
-Run it from the root of the project as "python demo/qtt_max.py".
+Run it from the root of the project as "python ttopt-demo/qtt_max.py".
 
 As a result of the script work we expect the output in console like this:
 "
