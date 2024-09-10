@@ -6,7 +6,7 @@ Y[i_1, i_2, ..., i_d] = (i_1 - 2)^2 + (i_2 - 3)^2 + i_2^4 + i_3^4 + ... + i_d^4.
 We will use special method of initialization. Instead of a random tensor, we
 manually construct a set of starting multi-indices for the search.
 
-Run it from the root of the project as "python demo/tensor_init_spec.py".
+Run it from the root of the project as "python ttopt-demo/tensor_init_spec.py".
 
 As a result of the script work we expect the output in console like this:
 "

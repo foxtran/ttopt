@@ -56,6 +56,7 @@ setup_args = dict(
     ],
     keywords='function optimization function minimization low-rank representation tensor train format TT-decomposition cross approximation',
     packages=find_packages('ttopt', './ttopt/'),
+    package_data={'':['../ttopt-demo/*.py','../*.so']},
     python_requires='>=3.7',
     project_urls={
         'Source': 'https://github.com/AndreiChertkov/ttopt',
